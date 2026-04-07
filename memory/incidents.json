@@ -2026,5 +2026,246 @@
             "target_ip": "45.160.135.56",
             "status": "success"
         }
+    },
+    {
+        "timestamp": "2026-04-07 17:27:19.065791",
+        "action_taken": "monitor",
+        "target_ip": "103.10.249.102",
+        "status": "success"
+    },
+    {
+        "attack": {
+            "log_id": "5b0f663a-b99b-4e74-90bb-06d9637a354e",
+            "agent_id": "RT-ALPHA",
+            "timestamp": "2026-04-06T16:25:27Z",
+            "source_ip": "103.10.249.102",
+            "target_ip": "185.87.190.186",
+            "attack_type": "port_scan",
+            "payload": null,
+            "ports_scanned": [
+                22,
+                25,
+                80,
+                143,
+                3389,
+                8080,
+                8443
+            ],
+            "open_ports": [
+                8443,
+                143,
+                25
+            ],
+            "scan_duration_ms": 2359
+        },
+        "assessment": {
+            "threat_level": "MEDIUM",
+            "reason": "A port scan from an external IP (103.10.249.102) successfully identified open ports (8443, 143, 25) on the target system (185.87.190.186). This indicates active reconnaissance, a common precursor to more sophisticated attacks, and suggests potential vulnerabilities or exposed services that could be targeted.",
+            "recommended_action": "block_ip",
+            "source_ip": "103.10.249.102",
+            "source_log_id": "5b0f663a-b99b-4e74-90bb-06d9637a354e",
+            "assessed_by": "BT-SENTINEL",
+            "assessed_at": "2026-04-07T11:57:19.060863"
+        },
+        "plan": {
+            "decision": "monitor",
+            "explanation": "Threat level is MEDIUM. Activity is suspicious but not immediately critical. The source IP will be added to the watchlist for continued observation. | Blue Team note: A port scan from an external IP (103.10.249.102) successfully identified open ports (8443, 143, 25) on the target system (185.87.190.186). This indicates active reconnaissance, a common precursor to more sophisticated attacks, and suggests potential vulnerabilities or exposed services that could be targeted. Blue Team recommended: 'block_ip'.",
+            "threat_level": "MEDIUM",
+            "target_ip": "103.10.249.102",
+            "source_log_id": "5b0f663a-b99b-4e74-90bb-06d9637a354e",
+            "planned_by": "PLANNER-ALPHA",
+            "planned_at": "2026-04-07T11:57:19Z"
+        },
+        "action": {
+            "timestamp": "2026-04-07 17:27:19.065791",
+            "action_taken": "monitor",
+            "target_ip": "103.10.249.102",
+            "status": "success"
+        }
+    },
+    {
+        "timestamp": "2026-04-07 17:27:26.331537",
+        "action_taken": "monitor",
+        "target_ip": "103.48.202.1",
+        "status": "success"
+    },
+    {
+        "attack": {
+            "log_id": "c3eb3728-9290-4438-a1a1-fa3287f00771",
+            "agent_id": "RT-ALPHA",
+            "timestamp": "2026-04-07T01:18:34Z",
+            "source_ip": "103.48.202.1",
+            "target_ip": "217.5.40.121",
+            "attack_type": "port_scan",
+            "payload": null,
+            "ports_scanned": [
+                21,
+                23,
+                53,
+                80,
+                143,
+                443,
+                3306,
+                8443
+            ],
+            "open_ports": [
+                8443
+            ],
+            "scan_duration_ms": 3605
+        },
+        "assessment": {
+            "threat_level": "MEDIUM",
+            "reason": "An external IP (103.48.202.1) performed a port scan, identifying an open port (8443) on the target (217.5.40.121). This is a reconnaissance activity that could precede further attacks. While no immediate exploit was detected, the discovery of an open service warrants attention.",
+            "recommended_action": "monitor",
+            "source_ip": "103.48.202.1",
+            "source_log_id": "c3eb3728-9290-4438-a1a1-fa3287f00771",
+            "assessed_by": "BT-SENTINEL",
+            "assessed_at": "2026-04-07T11:57:26.330114"
+        },
+        "plan": {
+            "decision": "monitor",
+            "explanation": "Threat level is MEDIUM. Activity is suspicious but not immediately critical. The source IP will be added to the watchlist for continued observation. | Blue Team note: An external IP (103.48.202.1) performed a port scan, identifying an open port (8443) on the target (217.5.40.121). This is a reconnaissance activity that could precede further attacks. While no immediate exploit was detected, the discovery of an open service warrants attention. Blue Team recommended: 'monitor'.",
+            "threat_level": "MEDIUM",
+            "target_ip": "103.48.202.1",
+            "source_log_id": "c3eb3728-9290-4438-a1a1-fa3287f00771",
+            "planned_by": "PLANNER-ALPHA",
+            "planned_at": "2026-04-07T11:57:26Z"
+        },
+        "action": {
+            "timestamp": "2026-04-07 17:27:26.331537",
+            "action_taken": "monitor",
+            "target_ip": "103.48.202.1",
+            "status": "success"
+        }
+    },
+    {
+        "timestamp": "2026-04-07 17:27:30.450700",
+        "action_taken": "block_ip",
+        "target_ip": "5.205.118.13",
+        "status": "success"
+    },
+    {
+        "attack": {
+            "log_id": "686bb36f-8e1e-4218-9283-877b37e4da3d",
+            "agent_id": "RT-ALPHA",
+            "timestamp": "2026-04-07T03:19:55Z",
+            "source_ip": "5.205.118.13",
+            "target_ip": "45.177.255.70",
+            "attack_type": "brute_force",
+            "payload": "root:toor",
+            "status": "success",
+            "attempts": 443
+        },
+        "assessment": {
+            "threat_level": "HIGH",
+            "reason": "A successful brute-force attack was detected against the 'root' user using default credentials ('root:toor'). This indicates a critical compromise of the target system, granting the attacker administrative access.",
+            "recommended_action": "block_ip",
+            "source_ip": "5.205.118.13",
+            "source_log_id": "686bb36f-8e1e-4218-9283-877b37e4da3d",
+            "assessed_by": "BT-SENTINEL",
+            "assessed_at": "2026-04-07T11:57:30.450700"
+        },
+        "plan": {
+            "decision": "block_ip",
+            "explanation": "Threat level is HIGH. Immediate action required \u2014 the source IP has been flagged for blocking to prevent further intrusion attempts or data compromise. | Blue Team note: A successful brute-force attack was detected against the 'root' user using default credentials ('root:toor'). This indicates a critical compromise of the target system, granting the attacker administrative access. Blue Team recommended: 'block_ip'.",
+            "threat_level": "HIGH",
+            "target_ip": "5.205.118.13",
+            "source_log_id": "686bb36f-8e1e-4218-9283-877b37e4da3d",
+            "planned_by": "PLANNER-ALPHA",
+            "planned_at": "2026-04-07T11:57:30Z"
+        },
+        "action": {
+            "timestamp": "2026-04-07 17:27:30.450700",
+            "action_taken": "block_ip",
+            "target_ip": "5.205.118.13",
+            "status": "success"
+        }
+    },
+    {
+        "timestamp": "2026-04-07 17:27:34.829366",
+        "action_taken": "block_ip",
+        "target_ip": "91.250.26.99",
+        "status": "success"
+    },
+    {
+        "attack": {
+            "log_id": "79a57145-0b30-4f48-9d2b-528f54e28769",
+            "agent_id": "RT-ALPHA",
+            "timestamp": "2026-04-07T05:49:03Z",
+            "source_ip": "91.250.26.99",
+            "target_ip": "5.234.86.39",
+            "attack_type": "brute_force",
+            "payload": "user:letmein",
+            "status": "failed",
+            "attempts": 154
+        },
+        "assessment": {
+            "threat_level": "HIGH",
+            "reason": "Persistent brute-force attack with 154 failed attempts from source IP 91.250.26.99 against target IP 5.234.86.39. This indicates a deliberate and active attempt to gain unauthorized access.",
+            "recommended_action": "block_ip",
+            "source_ip": "91.250.26.99",
+            "source_log_id": "79a57145-0b30-4f48-9d2b-528f54e28769",
+            "assessed_by": "BT-SENTINEL",
+            "assessed_at": "2026-04-07T11:57:34.827321"
+        },
+        "plan": {
+            "decision": "block_ip",
+            "explanation": "Threat level is HIGH. Immediate action required \u2014 the source IP has been flagged for blocking to prevent further intrusion attempts or data compromise. | Blue Team note: Persistent brute-force attack with 154 failed attempts from source IP 91.250.26.99 against target IP 5.234.86.39. This indicates a deliberate and active attempt to gain unauthorized access. Blue Team recommended: 'block_ip'.",
+            "threat_level": "HIGH",
+            "target_ip": "91.250.26.99",
+            "source_log_id": "79a57145-0b30-4f48-9d2b-528f54e28769",
+            "planned_by": "PLANNER-ALPHA",
+            "planned_at": "2026-04-07T11:57:34Z"
+        },
+        "action": {
+            "timestamp": "2026-04-07 17:27:34.829366",
+            "action_taken": "block_ip",
+            "target_ip": "91.250.26.99",
+            "status": "success"
+        }
+    },
+    {
+        "timestamp": "2026-04-07 17:27:40.669379",
+        "action_taken": "block_ip",
+        "target_ip": "217.12.182.89",
+        "status": "success"
+    },
+    {
+        "attack": {
+            "log_id": "5ca059e9-d798-4b29-8741-eaf39f17fcb3",
+            "agent_id": "RT-ALPHA",
+            "timestamp": "2026-04-07T05:57:07Z",
+            "source_ip": "217.12.182.89",
+            "target_ip": "203.222.239.47",
+            "attack_type": "sql_injection",
+            "endpoint": "/api/users",
+            "payload": "1' AND SLEEP(5) --",
+            "http_method": "POST",
+            "response_code": 500
+        },
+        "assessment": {
+            "threat_level": "HIGH",
+            "reason": "Confirmed SQL injection attempt targeting '/api/users' with a time-based payload ('SLEEP(5)'). The 500 Internal Server Error response code indicates the malicious payload was likely processed by the backend and caused an application or database error, confirming a vulnerability.",
+            "recommended_action": "block_ip",
+            "source_ip": "217.12.182.89",
+            "source_log_id": "5ca059e9-d798-4b29-8741-eaf39f17fcb3",
+            "assessed_by": "BT-SENTINEL",
+            "assessed_at": "2026-04-07T11:57:40.667238"
+        },
+        "plan": {
+            "decision": "block_ip",
+            "explanation": "Threat level is HIGH. Immediate action required \u2014 the source IP has been flagged for blocking to prevent further intrusion attempts or data compromise. | Blue Team note: Confirmed SQL injection attempt targeting '/api/users' with a time-based payload ('SLEEP(5)'). The 500 Internal Server Error response code indicates the malicious payload was likely processed by the backend and caused an application or database error, confirming a vulnerability. Blue Team recommended: 'block_ip'.",
+            "threat_level": "HIGH",
+            "target_ip": "217.12.182.89",
+            "source_log_id": "5ca059e9-d798-4b29-8741-eaf39f17fcb3",
+            "planned_by": "PLANNER-ALPHA",
+            "planned_at": "2026-04-07T11:57:40Z"
+        },
+        "action": {
+            "timestamp": "2026-04-07 17:27:40.669379",
+            "action_taken": "block_ip",
+            "target_ip": "217.12.182.89",
+            "status": "success"
+        }
     }
 ]
