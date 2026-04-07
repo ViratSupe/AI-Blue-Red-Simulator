@@ -2,6 +2,8 @@ import os
 import json
 from datetime import datetime
 import google.generativeai as genai
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class BlueTeamAgent:
@@ -9,7 +11,7 @@ class BlueTeamAgent:
         self.agent_id = agent_id
         
         # ⚠️ TEMP: Replace with env variable later
-        api_key = "YOUR_API_KEY_HERE"
+        api_key = os.getenv("GEMINI_API_KEY")
         genai.configure(api_key=api_key)
 
         self.model = genai.GenerativeModel("gemini-2.5-flash")
