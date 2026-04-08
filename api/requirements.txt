@@ -8,3 +8,4 @@ pydantic==2.10.3          # response/request schema validation (bundled with Fas
 # ── Optional but recommended for production ───────────────────────────────────
 python-dotenv==1.0.1      # load .env files (API keys, config)
 google-generativeai
+python-multipart==0.0.9

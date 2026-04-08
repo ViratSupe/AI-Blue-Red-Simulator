@@ -4,29 +4,12 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Virtual environment
+# Virtual env
 .venv/
-venv/
-env/
 
-# Environment variables
+# Env file
 .env
 
-# Logs
-logs/
-*.log
-
-# OS files
+# OS
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Build
-dist/
-build/
-
-# Cache
-.cache/

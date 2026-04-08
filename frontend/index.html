@@ -17,10 +17,8 @@
       --bg-card:      #0e1520;
       --bg-card-alt:  #111c2a;
 
-      --grid-line:    rgba(0, 200, 255, 0.04);
       --scan-line:    rgba(0, 200, 255, 0.03);
 
-      /* accent palette */
       --cyan:         #00d4ff;
       --cyan-dim:     rgba(0, 212, 255, 0.15);
       --cyan-glow:    rgba(0, 212, 255, 0.4);
@@ -41,6 +39,10 @@
       --green-dim:    rgba(0, 245, 155, 0.12);
       --green-glow:   rgba(0, 245, 155, 0.35);
 
+      --purple:       #b57bff;
+      --purple-dim:   rgba(181, 123, 255, 0.12);
+      --purple-glow:  rgba(181, 123, 255, 0.35);
+
       --text-primary: #e8f4ff;
       --text-muted:   #4a6480;
       --text-dim:     #253040;
@@ -59,7 +61,6 @@
 
     /* ── Reset & Base ─────────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -72,38 +73,28 @@
       overflow-x: hidden;
     }
 
-    /* ── Dot-grid background ──────────────────────────────────────────────── */
+    /* dot grid */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(circle, rgba(0,212,255,0.07) 1px, transparent 1px);
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(0,212,255,0.07) 1px, transparent 1px);
       background-size: 32px 32px;
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
-
-    /* ── Scanline overlay ─────────────────────────────────────────────────── */
+    /* scanlines */
     body::after {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        var(--scan-line) 2px,
-        var(--scan-line) 4px
+        0deg, transparent, transparent 2px,
+        var(--scan-line) 2px, var(--scan-line) 4px
       );
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
 
     /* ── Layout ───────────────────────────────────────────────────────────── */
     .shell {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       max-width: 1100px;
       margin: 0 auto;
       padding: 40px 24px 80px;
@@ -111,215 +102,270 @@
 
     /* ── Header ───────────────────────────────────────────────────────────── */
     .header {
-      display: flex;
-      align-items: flex-start;
+      display: flex; align-items: flex-start;
       justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
+      gap: 24px; margin-bottom: 48px; flex-wrap: wrap;
     }
-
-    .logo-block {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
+    .logo-block { display: flex; flex-direction: column; gap: 6px; }
     .logo-text {
       font-family: var(--font-display);
       font-size: clamp(28px, 5vw, 44px);
-      font-weight: 900;
-      letter-spacing: 6px;
+      font-weight: 900; letter-spacing: 6px;
       color: var(--cyan);
       text-shadow: 0 0 20px var(--cyan-glow), 0 0 60px rgba(0,212,255,0.15);
       line-height: 1;
     }
-
     .logo-sub {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      text-transform: uppercase;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase;
     }
-
     .status-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 6px;
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--text-muted); margin-top: 6px;
     }
-
     .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 8px var(--green);
       animation: pulse-dot 2s ease-in-out infinite;
     }
-
     @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.85); }
+      0%,100% { opacity:1; transform:scale(1); }
+      50%     { opacity:0.5; transform:scale(0.85); }
     }
-
-    .sys-stats {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
+    .sys-stats { display: flex; gap: 20px; flex-wrap: wrap; }
     .stat-chip {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: var(--radius);
-      background: var(--bg-card);
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px;
+      color: var(--text-muted); border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: var(--radius); background: var(--bg-card);
+    }
+    .stat-chip span { color: var(--cyan); }
+
+    /* ── Section divider ─────────────────────────────────────────────────── */
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-label-text {
+      font-family: var(--font-display); font-size: 11px;
+      letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase;
+    }
+    .section-label-line {
+      flex: 1; height: 1px; background: var(--border);
     }
 
-    .stat-chip span {
-      color: var(--cyan);
+    /* ── Control row: run + upload side by side ───────────────────────────── */
+    .controls-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 680px) {
+      .controls-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Shared action panel ─────────────────────────────────────────────── */
+    .action-panel {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .action-panel:hover {
+      border-color: var(--border-hover);
+    }
+    .action-panel-title {
+      font-family: var(--font-display); font-size: 10px;
+      letter-spacing: 4px; color: var(--text-muted); text-transform: uppercase;
+      align-self: flex-start;
     }
 
     /* ── Run button ───────────────────────────────────────────────────────── */
-    .run-zone {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 52px;
-    }
-
     .run-btn {
-      position: relative;
-      cursor: pointer;
-      border: none;
-      background: none;
-      padding: 0;
-      outline: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer; border: none; background: none;
+      padding: 0; outline: none; width: 100%;
     }
-
     .run-btn-inner {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      position: relative; display: flex; align-items: center;
+      justify-content: center; gap: 14px;
       background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,212,255,0.02));
       border: 1px solid var(--cyan);
       border-radius: var(--radius-lg);
-      padding: 16px 40px;
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      color: var(--cyan);
-      text-transform: uppercase;
+      padding: 14px 28px;
+      font-family: var(--font-display); font-size: 13px;
+      font-weight: 700; letter-spacing: 4px;
+      color: var(--cyan); text-transform: uppercase;
       transition: all var(--transition);
       box-shadow: 0 0 20px rgba(0,212,255,0.1), inset 0 0 20px rgba(0,212,255,0.03);
-      overflow: hidden;
+      overflow: hidden; width: 100%;
     }
-
     .run-btn-inner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(90deg, transparent, rgba(0,212,255,0.12), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s ease;
+      transform: translateX(-100%); transition: transform 0.6s ease;
     }
-
     .run-btn:hover .run-btn-inner {
       background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.06));
       box-shadow: 0 0 40px rgba(0,212,255,0.25), 0 0 80px rgba(0,212,255,0.1), inset 0 0 30px rgba(0,212,255,0.06);
       transform: translateY(-2px);
     }
+    .run-btn:hover .run-btn-inner::before { transform: translateX(100%); }
+    .run-btn:active .run-btn-inner { transform: translateY(0); }
+    .run-btn:disabled .run-btn-inner { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    .run-btn:hover .run-btn-inner::before {
-      transform: translateX(100%);
+    .btn-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── Upload panel ─────────────────────────────────────────────────────── */
+    .upload-btn {
+      cursor: pointer; border: none; background: none;
+      padding: 0; outline: none; width: 100%;
     }
-
-    .run-btn:active .run-btn-inner {
-      transform: translateY(0);
+    .upload-btn-inner {
+      position: relative; display: flex; align-items: center;
+      justify-content: center; gap: 12px;
+      background: linear-gradient(135deg, rgba(181,123,255,0.08), rgba(181,123,255,0.02));
+      border: 1px solid var(--purple);
+      border-radius: var(--radius-lg);
+      padding: 14px 28px;
+      font-family: var(--font-display); font-size: 13px;
+      font-weight: 700; letter-spacing: 4px;
+      color: var(--purple); text-transform: uppercase;
+      transition: all var(--transition);
+      box-shadow: 0 0 20px rgba(181,123,255,0.1), inset 0 0 20px rgba(181,123,255,0.03);
+      overflow: hidden; width: 100%;
     }
-
-    .run-btn:disabled .run-btn-inner {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
+    .upload-btn-inner::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(181,123,255,0.12), transparent);
+      transform: translateX(-100%); transition: transform 0.6s ease;
     }
+    .upload-btn:hover .upload-btn-inner {
+      background: linear-gradient(135deg, rgba(181,123,255,0.15), rgba(181,123,255,0.06));
+      box-shadow: 0 0 40px rgba(181,123,255,0.25), inset 0 0 30px rgba(181,123,255,0.06);
+      transform: translateY(-2px);
+    }
+    .upload-btn:hover .upload-btn-inner::before { transform: translateX(100%); }
+    .upload-btn:active .upload-btn-inner { transform: translateY(0); }
+    .upload-btn:disabled .upload-btn-inner { opacity:0.4; cursor:not-allowed; transform:none; }
 
-    .btn-icon {
-      width: 18px;
-      height: 18px;
+    /* Hidden native file input */
+    #file-input { display: none; }
+
+    /* Drop zone */
+    .drop-zone {
+      width: 100%;
+      border: 1px dashed rgba(181,123,255,0.25);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      text-align: center;
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-muted); letter-spacing: 1px;
+      cursor: pointer;
+      transition: all var(--transition);
+      background: rgba(181,123,255,0.03);
       position: relative;
     }
+    .drop-zone.dragover {
+      border-color: var(--purple);
+      background: var(--purple-dim);
+      color: var(--purple);
+    }
+    .drop-zone.has-file {
+      border-color: rgba(181,123,255,0.5);
+      color: var(--purple);
+    }
+    .drop-zone-icon { font-size: 18px; margin-bottom: 4px; display: block; }
 
-    /* ── Status ticker ────────────────────────────────────────────────────── */
+    /* file info chip */
+    .file-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px;
+      padding: 4px 10px; border-radius: var(--radius);
+      border: 1px solid rgba(181,123,255,0.4);
+      color: var(--purple); background: var(--purple-dim);
+      max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .file-chip-remove {
+      cursor: pointer; opacity: 0.6;
+      transition: opacity var(--transition); font-size: 14px; flex-shrink: 0;
+    }
+    .file-chip-remove:hover { opacity: 1; }
+
+    /* ── Ticker & progress (shared) ──────────────────────────────────────── */
     .ticker {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--cyan);
-      letter-spacing: 2px;
-      height: 20px;
-      overflow: hidden;
-      opacity: 0;
-      transition: opacity var(--transition);
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 2px; height: 18px; overflow: hidden;
+      opacity: 0; transition: opacity var(--transition); width: 100%; text-align: center;
     }
-
     .ticker.visible { opacity: 1; }
-
-    .ticker-text {
-      display: inline-block;
-      animation: ticker-in 0.3s ease forwards;
-    }
-
+    .ticker.cyan-tick { color: var(--cyan); }
+    .ticker.purple-tick { color: var(--purple); }
+    .ticker-text { display: inline-block; animation: ticker-in 0.3s ease forwards; }
     @keyframes ticker-in {
-      from { transform: translateY(12px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
+      from { transform: translateY(10px); opacity:0; }
+      to   { transform: translateY(0);    opacity:1; }
     }
 
-    /* ── Progress bar ─────────────────────────────────────────────────────── */
     .progress-bar {
-      width: 420px;
-      max-width: 100%;
-      height: 2px;
-      background: var(--border);
-      border-radius: 999px;
-      overflow: hidden;
-      opacity: 0;
-      transition: opacity var(--transition);
+      width: 100%; height: 2px;
+      background: var(--border); border-radius: 999px;
+      overflow: hidden; opacity: 0; transition: opacity var(--transition);
     }
-
     .progress-bar.visible { opacity: 1; }
-
     .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--cyan), rgba(0,212,255,0.4));
-      border-radius: 999px;
-      box-shadow: 0 0 10px var(--cyan);
-      width: 0%;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%; border-radius: 999px;
+      width: 0%; transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
     }
+    .progress-fill.cyan-fill  { background: linear-gradient(90deg, var(--cyan), rgba(0,212,255,0.4)); box-shadow: 0 0 10px var(--cyan); }
+    .progress-fill.purple-fill { background: linear-gradient(90deg, var(--purple), rgba(181,123,255,0.4)); box-shadow: 0 0 10px var(--purple); }
 
     /* ── Results grid ─────────────────────────────────────────────────────── */
+    .results-section { margin-top: 0; }
+
     .results-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
-
     @media (max-width: 700px) {
       .results-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Upload results: one row per log line ────────────────────────────── */
+    .upload-results-list {
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .upload-log-block {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .upload-log-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid rgba(181,123,255,0.2);
+      border-radius: var(--radius);
+    }
+    .upload-log-index {
+      font-family: var(--font-display); font-size: 11px;
+      letter-spacing: 3px; color: var(--purple);
+    }
+    .upload-log-raw {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--text-muted); overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+      flex: 1; min-width: 0;
+    }
+    .upload-log-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .upload-log-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Card ─────────────────────────────────────────────────────────────── */
@@ -327,338 +373,215 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease, border-color var(--transition), box-shadow var(--transition);
+      padding: 24px; position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease,
+                  border-color var(--transition), box-shadow var(--transition);
     }
+    .card.visible { opacity:1; transform:translateY(0); }
+    .card:hover { border-color: var(--border-hover); }
 
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .card:hover {
-      border-color: var(--border-hover);
-    }
-
-    /* corner accent */
+    /* corner accents */
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 40px; height: 40px;
-      border-top: 2px solid;
-      border-left: 2px solid;
-      border-radius: var(--radius-lg) 0 0 0;
-      opacity: 0.6;
+      content: ''; position: absolute; top:0; left:0;
+      width:40px; height:40px;
+      border-top:2px solid; border-left:2px solid;
+      border-radius: var(--radius-lg) 0 0 0; opacity:0.6;
     }
-
     .card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; right: 0;
-      width: 24px; height: 24px;
-      border-bottom: 1px solid;
-      border-right: 1px solid;
-      border-radius: 0 0 var(--radius-lg) 0;
-      opacity: 0.3;
+      content: ''; position: absolute; bottom:0; right:0;
+      width:24px; height:24px;
+      border-bottom:1px solid; border-right:1px solid;
+      border-radius:0 0 var(--radius-lg) 0; opacity:0.3;
     }
 
-    /* colour themes */
-    .card-red   { --card-accent: var(--red);   --card-dim: var(--red-dim);   --card-glow: var(--red-glow);   }
-    .card-blue  { --card-accent: var(--blue);  --card-dim: var(--blue-dim);  --card-glow: var(--blue-glow);  }
-    .card-amber { --card-accent: var(--amber); --card-dim: var(--amber-dim); --card-glow: var(--amber-glow); }
-    .card-green { --card-accent: var(--green); --card-dim: var(--green-dim); --card-glow: var(--green-glow); }
+    .card-red   { --card-accent:var(--red);    --card-dim:var(--red-dim);    --card-glow:var(--red-glow);   }
+    .card-blue  { --card-accent:var(--blue);   --card-dim:var(--blue-dim);   --card-glow:var(--blue-glow);  }
+    .card-amber { --card-accent:var(--amber);  --card-dim:var(--amber-dim);  --card-glow:var(--amber-glow); }
+    .card-green { --card-accent:var(--green);  --card-dim:var(--green-dim);  --card-glow:var(--green-glow); }
+    .card-purple{ --card-accent:var(--purple); --card-dim:var(--purple-dim); --card-glow:var(--purple-glow);}
 
     .card::before, .card::after { border-color: var(--card-accent); }
+    .card:hover { box-shadow: 0 0 30px var(--card-glow); border-color: var(--card-accent); }
 
-    .card:hover {
-      box-shadow: 0 0 30px var(--card-glow);
-      border-color: var(--card-accent);
-    }
-
-    /* glow stripe */
     .card-glow-stripe {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
+      position: absolute; top:0; left:0; right:0; height:1px;
       background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
-      opacity: 0.5;
+      opacity:0.5;
     }
 
     /* ── Card header ──────────────────────────────────────────────────────── */
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
+    .card-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
     .card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius);
-      background: var(--card-dim);
-      border: 1px solid var(--card-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-      box-shadow: 0 0 12px var(--card-glow);
+      width:36px; height:36px; border-radius:var(--radius);
+      background:var(--card-dim); border:1px solid var(--card-accent);
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; flex-shrink:0; box-shadow:0 0 12px var(--card-glow);
     }
-
-    .card-title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
+    .card-title-block { display:flex; flex-direction:column; gap:2px; }
     .card-label {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: var(--card-accent);
-      text-transform: uppercase;
-      opacity: 0.8;
+      font-family:var(--font-mono); font-size:10px;
+      letter-spacing:3px; color:var(--card-accent); text-transform:uppercase; opacity:0.8;
     }
-
     .card-title {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--text-primary);
+      font-family:var(--font-display); font-size:12px;
+      font-weight:700; letter-spacing:2px; color:var(--text-primary);
     }
-
     .card-badge {
-      margin-left: auto;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 1px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid var(--card-accent);
-      color: var(--card-accent);
-      background: var(--card-dim);
-      white-space: nowrap;
+      margin-left:auto; font-family:var(--font-mono); font-size:10px;
+      letter-spacing:1px; padding:3px 9px; border-radius:999px;
+      border:1px solid var(--card-accent); color:var(--card-accent);
+      background:var(--card-dim); white-space:nowrap;
     }
 
-    /* ── Field rows ───────────────────────────────────────────────────────── */
+    /* ── Fields ───────────────────────────────────────────────────────────── */
     .field-row {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
+      display:flex; flex-direction:column; gap:3px;
+      padding:10px 0; border-bottom:1px solid var(--border);
     }
-
-    .field-row:last-child { border-bottom: none; }
-
+    .field-row:last-child { border-bottom:none; }
     .field-key {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      text-transform: uppercase;
+      font-family:var(--font-mono); font-size:10px;
+      letter-spacing:2px; color:var(--text-muted); text-transform:uppercase;
     }
-
     .field-val {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--text-primary);
-      word-break: break-all;
-      line-height: 1.5;
+      font-family:var(--font-mono); font-size:13px;
+      color:var(--text-primary); word-break:break-all; line-height:1.5;
     }
-
-    .field-val.accent { color: var(--card-accent); font-weight: bold; }
-    .field-val.ip     { color: var(--cyan); letter-spacing: 1px; }
+    .field-val.accent { color:var(--card-accent); font-weight:bold; }
+    .field-val.ip     { color:var(--cyan); letter-spacing:1px; }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: var(--radius);
-      border: 1px solid var(--card-accent);
-      color: var(--card-accent);
-      background: var(--card-dim);
+      display:inline-flex; align-items:center; gap:5px;
+      font-family:var(--font-mono); font-size:11px;
+      padding:2px 8px; border-radius:var(--radius);
+      border:1px solid var(--card-accent); color:var(--card-accent);
+      background:var(--card-dim);
     }
-
     .tag::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--card-accent);
-      box-shadow: 0 0 6px var(--card-accent);
+      content:''; width:5px; height:5px; border-radius:50%;
+      background:var(--card-accent); box-shadow:0 0 6px var(--card-accent);
     }
 
-    /* ── Payload block ────────────────────────────────────────────────────── */
     .payload-block {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      background: var(--bg-deep);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--card-accent);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      color: var(--card-accent);
-      line-height: 1.7;
-      word-break: break-all;
-      margin-top: 4px;
+      font-family:var(--font-mono); font-size:12px;
+      background:var(--bg-deep); border:1px solid var(--border);
+      border-left:3px solid var(--card-accent);
+      border-radius:var(--radius); padding:10px 14px;
+      color:var(--card-accent); line-height:1.7;
+      word-break:break-all; margin-top:4px;
     }
 
-    /* ── Threat level chip ────────────────────────────────────────────────── */
     .threat-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 14px;
-      border-radius: var(--radius);
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 3px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:5px 14px; border-radius:var(--radius);
+      font-family:var(--font-display); font-size:13px;
+      font-weight:700; letter-spacing:3px;
     }
+    .threat-HIGH   { background:var(--red-dim);   border:1px solid var(--red);   color:var(--red);   box-shadow:0 0 12px var(--red-glow);   }
+    .threat-MEDIUM { background:var(--amber-dim); border:1px solid var(--amber); color:var(--amber); box-shadow:0 0 12px var(--amber-glow); }
+    .threat-LOW    { background:var(--green-dim); border:1px solid var(--green); color:var(--green); box-shadow:0 0 12px var(--green-glow); }
 
-    .threat-HIGH   { background: var(--red-dim);   border: 1px solid var(--red);   color: var(--red);   box-shadow: 0 0 12px var(--red-glow);   }
-    .threat-MEDIUM { background: var(--amber-dim); border: 1px solid var(--amber); color: var(--amber); box-shadow: 0 0 12px var(--amber-glow); }
-    .threat-LOW    { background: var(--green-dim); border: 1px solid var(--green); color: var(--green); box-shadow: 0 0 12px var(--green-glow); }
-
-    /* ── Empty / error state ──────────────────────────────────────────────── */
-    .empty-state {
-      grid-column: 1 / -1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      padding: 80px 24px;
-      border: 1px dashed var(--border);
-      border-radius: var(--radius-lg);
-      text-align: center;
-    }
-
-    .empty-icon {
-      font-size: 36px;
-      opacity: 0.3;
-    }
-
-    .empty-text {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-    }
-
-    .error-state {
-      grid-column: 1 / -1;
-      padding: 20px 24px;
-      background: var(--red-dim);
-      border: 1px solid var(--red);
-      border-radius: var(--radius-lg);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--red);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* ── Run ID strip ─────────────────────────────────────────────────────── */
+    /* ── Meta strip ───────────────────────────────────────────────────────── */
     .run-meta {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-      margin-bottom: -4px;
+      grid-column:1/-1;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 16px; background:var(--bg-card);
+      border:1px solid var(--border); border-radius:var(--radius);
+      font-family:var(--font-mono); font-size:11px;
+      color:var(--text-muted); flex-wrap:wrap; margin-bottom:-4px;
     }
+    .run-meta span { color:var(--cyan); }
 
-    .run-meta span { color: var(--cyan); }
+    /* ── Upload meta strip (purple tint) ──────────────────────────────────── */
+    .upload-meta {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 16px; background:var(--bg-card);
+      border:1px solid rgba(181,123,255,0.2); border-radius:var(--radius);
+      font-family:var(--font-mono); font-size:11px;
+      color:var(--text-muted); flex-wrap:wrap;
+    }
+    .upload-meta span { color:var(--purple); }
+
+    /* ── Empty / error states ─────────────────────────────────────────────── */
+    .empty-state {
+      grid-column:1/-1;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:16px;
+      padding:80px 24px;
+      border:1px dashed var(--border); border-radius:var(--radius-lg); text-align:center;
+    }
+    .empty-icon { font-size:36px; opacity:0.3; }
+    .empty-text {
+      font-family:var(--font-mono); font-size:13px;
+      color:var(--text-muted); letter-spacing:2px;
+    }
+    .error-state {
+      grid-column:1/-1; padding:20px 24px;
+      background:var(--red-dim); border:1px solid var(--red);
+      border-radius:var(--radius-lg); font-family:var(--font-mono);
+      font-size:13px; color:var(--red); display:flex; align-items:center; gap:10px;
+    }
 
     /* ── Footer ───────────────────────────────────────────────────────────── */
     .footer {
-      margin-top: 60px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      margin-top:60px; padding-top:20px; border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
     }
-
     .footer-text {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 1px;
+      font-family:var(--font-mono); font-size:11px;
+      color:var(--text-dim); letter-spacing:1px;
     }
 
     /* ── Spinner ──────────────────────────────────────────────────────────── */
     .spin {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(0,212,255,0.2);
-      border-top-color: var(--cyan);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      flex-shrink: 0;
+      display:inline-block; width:16px; height:16px;
+      border:2px solid rgba(0,212,255,0.2); border-top-color:var(--cyan);
+      border-radius:50%; animation:spin 0.7s linear infinite; flex-shrink:0;
     }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ── Scrollbar ────────────────────────────────────────────────────────── */
-    ::-webkit-scrollbar       { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-void); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--cyan-dim); }
+    ::-webkit-scrollbar       { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:var(--cyan-dim); }
   </style>
 </head>
 
 <body>
-  <div class="shell">
+<div class="shell">
 
-    <!-- ── Header ──────────────────────────────────────────────────────── -->
-    <header class="header">
-      <div class="logo-block">
-        <div class="logo-text">AEGIS</div>
-        <div class="logo-sub">Autonomous Engagement &amp; Guardian Intelligence System</div>
-        <div class="status-bar">
-          <div class="status-dot"></div>
-          <span id="sys-status">SYSTEMS ONLINE</span>
-        </div>
+  <!-- ── Header ──────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="logo-block">
+      <div class="logo-text">AEGIS</div>
+      <div class="logo-sub">Autonomous Engagement &amp; Guardian Intelligence System</div>
+      <div class="status-bar">
+        <div class="status-dot"></div>
+        <span id="sys-status">SYSTEMS ONLINE</span>
       </div>
+    </div>
+    <div class="sys-stats">
+      <div class="stat-chip">AGENTS <span>3 ACTIVE</span></div>
+      <div class="stat-chip">MODE <span>SIMULATION</span></div>
+      <div class="stat-chip">BACKEND <span>:8000</span></div>
+      <div class="stat-chip">RUNS <span id="run-count">0</span></div>
+    </div>
+  </header>
 
-      <div class="sys-stats">
-        <div class="stat-chip">AGENTS <span>3 ACTIVE</span></div>
-        <div class="stat-chip">MODE <span>SIMULATION</span></div>
-        <div class="stat-chip">BACKEND <span id="backend-url">:8000</span></div>
-        <div class="stat-chip">RUNS <span id="run-count">0</span></div>
-      </div>
-    </header>
+  <!-- ── Controls ────────────────────────────────────────────────────── -->
+  <div class="section-label">
+    <div class="section-label-text">Input Mode</div>
+    <div class="section-label-line"></div>
+  </div>
 
-    <!-- ── Run control ─────────────────────────────────────────────────── -->
-    <div class="run-zone">
-      <button class="run-btn" id="run-btn" onclick="runSimulation()">
+  <div class="controls-row">
+
+    <!-- Left: Simulation -->
+    <div class="action-panel" id="sim-panel">
+      <div class="action-panel-title">◈ Synthetic Simulation</div>
+      <button class="run-btn" id="run-btn">
         <div class="run-btn-inner">
           <svg class="btn-icon" viewBox="0 0 18 18" fill="none">
             <polygon points="4,2 16,9 4,16" fill="currentColor"/>
@@ -666,315 +589,542 @@
           RUN SIMULATION
         </div>
       </button>
-      <div class="ticker" id="ticker"><span class="ticker-text" id="ticker-text"></span></div>
-      <div class="progress-bar" id="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+      <div class="ticker cyan-tick" id="sim-ticker">
+        <span class="ticker-text" id="sim-ticker-text"></span>
+      </div>
+      <div class="progress-bar" id="sim-progress-bar">
+        <div class="progress-fill cyan-fill" id="sim-progress-fill"></div>
       </div>
     </div>
 
-    <!-- ── Results ─────────────────────────────────────────────────────── -->
+    <!-- Right: File Upload -->
+    <div class="action-panel" id="upload-panel">
+      <div class="action-panel-title">◉ Log File Ingestion</div>
+
+      <!-- Hidden real input -->
+      <input type="file" id="file-input" accept=".log,.txt" />
+
+      <!-- Drop zone -->
+      <div class="drop-zone" id="drop-zone" title="Click to browse or drag a file here">
+        <span class="drop-zone-icon">⬆</span>
+        <span id="drop-zone-text">DROP .LOG / .TXT HERE<br><small style="opacity:.5">or click to browse · max 1 MB · 5 lines</small></span>
+      </div>
+
+      <!-- Selected file chip (hidden until file chosen) -->
+      <div id="file-chip-wrap" style="width:100%;display:none;">
+        <div class="file-chip">
+          <span id="file-chip-name"></span>
+          <span class="file-chip-remove" id="file-chip-remove" title="Clear file">✕</span>
+        </div>
+      </div>
+
+      <button class="upload-btn" id="upload-btn" disabled>
+        <div class="upload-btn-inner">
+          <svg class="btn-icon" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="11" width="14" height="2" rx="1" fill="currentColor"/>
+            <polygon points="9,2 15,9 3,9" fill="currentColor"/>
+          </svg>
+          UPLOAD LOGS
+        </div>
+      </button>
+
+      <div class="ticker purple-tick" id="upload-ticker">
+        <span class="ticker-text" id="upload-ticker-text"></span>
+      </div>
+      <div class="progress-bar" id="upload-progress-bar">
+        <div class="progress-fill purple-fill" id="upload-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Results ──────────────────────────────────────────────────────── -->
+  <div class="results-section">
+    <div class="section-label">
+      <div class="section-label-text">Analysis Output</div>
+      <div class="section-label-line"></div>
+    </div>
     <div class="results-grid" id="results">
       <div class="empty-state">
         <div class="empty-icon">◈</div>
-        <div class="empty-text">NO SIMULATION DATA — PRESS RUN TO BEGIN</div>
+        <div class="empty-text">NO DATA — RUN SIMULATION OR UPLOAD A LOG FILE</div>
       </div>
     </div>
+  </div>
 
-    <!-- ── Footer ──────────────────────────────────────────────────────── -->
-    <footer class="footer">
-      <div class="footer-text">AEGIS v1.0 · CYBERSECURITY MULTI-AGENT SIMULATOR</div>
-      <div class="footer-text" id="last-run">LAST RUN: —</div>
-    </footer>
+  <!-- ── Footer ───────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-text">AEGIS v1.2 · CYBERSECURITY MULTI-AGENT SIMULATOR</div>
+    <div class="footer-text" id="last-run">LAST RUN: —</div>
+  </footer>
 
-  </div><!-- /shell -->
+</div><!-- /shell -->
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       JavaScript
-  ════════════════════════════════════════════════════════════════════════ -->
-  <script>
-    /* ── Config ──────────────────────────────────────────────────────────── */
-// 🌍 AUTO SWITCH: LOCAL vs DEPLOYED
-    const API_BASE = window.location.hostname === "localhost" 
-        ? "http://127.0.0.1:8000"
-        : "https://your-backend-url.onrender.com";  // 🔥 replace later
+<!-- ════════════════════════════════════════════════════════════════════════
+     JavaScript
+════════════════════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
 
-    const RUN_URL = `${API_BASE}/run`;
+/* ── Config ──────────────────────────────────────────────────────────────── */
+const API_BASE   = 'https://ai-blue-red-simulator.onrender.com';
+const RUN_URL    = `${API_BASE}/run`;
+const UPLOAD_URL = `${API_BASE}/upload`;
+const MAX_FILE_BYTES = 1 * 1024 * 1024;   // mirror backend limit (1 MB)
 
-    let runCount = 0;
+let runCount = 0;
 
-    /* ── DOM refs ────────────────────────────────────────────────────────── */
-    const $btn      = document.getElementById('run-btn');
-    const $ticker   = document.getElementById('ticker');
-    const $tickerTx = document.getElementById('ticker-text');
-    const $progBar  = document.getElementById('progress-bar');
-    const $progFill = document.getElementById('progress-fill');
-    const $results  = document.getElementById('results');
-    const $runCount = document.getElementById('run-count');
-    const $lastRun  = document.getElementById('last-run');
+/* ── DOM refs ────────────────────────────────────────────────────────────── */
+// Simulation
+const $runBtn        = document.getElementById('run-btn');
+const $simTicker     = document.getElementById('sim-ticker');
+const $simTickerText = document.getElementById('sim-ticker-text');
+const $simProgBar    = document.getElementById('sim-progress-bar');
+const $simProgFill   = document.getElementById('sim-progress-fill');
 
-    /* ── Status messages sequence ────────────────────────────────────────── */
-    const STATUS_STEPS = [
-      { msg: '▸ INITIALISING AGENTS...',   pct: 10 },
-      { msg: '▸ SIMULATING ATTACK...',     pct: 30 },
-      { msg: '▸ ANALYZING THREAT...',      pct: 55 },
-      { msg: '▸ MAKING DECISION...',       pct: 75 },
-      { msg: '▸ EXECUTING ACTION...',      pct: 90 },
-      { msg: '▸ COMPILING RESULTS...',     pct: 98 },
-    ];
+// Upload
+const $fileInput         = document.getElementById('file-input');
+const $dropZone          = document.getElementById('drop-zone');
+const $dropZoneText      = document.getElementById('drop-zone-text');
+const $fileChipWrap      = document.getElementById('file-chip-wrap');
+const $fileChipName      = document.getElementById('file-chip-name');
+const $fileChipRemove    = document.getElementById('file-chip-remove');
+const $uploadBtn         = document.getElementById('upload-btn');
+const $uploadTicker      = document.getElementById('upload-ticker');
+const $uploadTickerText  = document.getElementById('upload-ticker-text');
+const $uploadProgBar     = document.getElementById('upload-progress-bar');
+const $uploadProgFill    = document.getElementById('upload-progress-fill');
 
-    /* ── Helpers ─────────────────────────────────────────────────────────── */
-    function setTicker(msg) {
-      $tickerTx.textContent = msg;
-      // Re-trigger animation
-      $tickerTx.style.animation = 'none';
-      requestAnimationFrame(() => {
-        $tickerTx.style.animation = '';
-      });
-      $ticker.classList.add('visible');
+// Shared
+const $results   = document.getElementById('results');
+const $runCount  = document.getElementById('run-count');
+const $lastRun   = document.getElementById('last-run');
+
+/* ── Selected file state ──────────────────────────────────────────────────── */
+let selectedFile = null;
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Utility helpers
+════════════════════════════════════════════════════════════════════════════ */
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatAttackType(t) {
+  return (t || 'UNKNOWN').replace(/_/g,' ').toUpperCase();
+}
+
+function formatTime(iso) {
+  if (!iso) return '—';
+  try { return new Date(iso).toUTCString().replace('GMT','UTC'); }
+  catch { return iso; }
+}
+
+/* ── Generic ticker helper ────────────────────────────────────────────────── */
+function setTicker($el, $text, msg) {
+  $text.textContent = msg;
+  $text.style.animation = 'none';
+  requestAnimationFrame(() => { $text.style.animation = ''; });
+  $el.classList.add('visible');
+}
+
+function hideTicker($el, $bar, $fill) {
+  $el.classList.remove('visible');
+  $bar.classList.remove('visible');
+  $fill.style.width = '0%';
+}
+
+function setProgress($bar, $fill, pct) {
+  $bar.classList.add('visible');
+  $fill.style.width = pct + '%';
+}
+
+/* ── Status animation sequences ──────────────────────────────────────────── */
+const SIM_STEPS = [
+  { msg:'▸ INITIALISING AGENTS...',  pct:10 },
+  { msg:'▸ SIMULATING ATTACK...',    pct:30 },
+  { msg:'▸ ANALYZING THREAT...',     pct:55 },
+  { msg:'▸ MAKING DECISION...',      pct:75 },
+  { msg:'▸ EXECUTING ACTION...',     pct:90 },
+  { msg:'▸ COMPILING RESULTS...',    pct:98 },
+];
+
+const UPLOAD_STEPS = [
+  { msg:'▸ READING FILE...',         pct:15 },
+  { msg:'▸ PARSING LOG LINES...',    pct:35 },
+  { msg:'▸ ANALYZING THREATS...',    pct:60 },
+  { msg:'▸ EXECUTING DECISIONS...',  pct:85 },
+  { msg:'▸ COMPILING REPORT...',     pct:98 },
+];
+
+async function animateSteps($ticker, $tickerText, $progBar, $progFill, steps) {
+  for (const step of steps) {
+    setTicker($ticker, $tickerText, step.msg);
+    setProgress($progBar, $progFill, step.pct);
+    await delay(400);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Card builders  (reused for both simulation and upload results)
+════════════════════════════════════════════════════════════════════════════ */
+
+function fieldRow(key, valHtml) {
+  return `<div class="field-row">
+    <div class="field-key">${key}</div>
+    <div class="field-val">${valHtml}</div>
+  </div>`;
+}
+
+function buildAttackCard(a, label='Step 01 · RedTeamAgent') {
+  const type  = formatAttackType(a.attack_type);
+  const ports = a.ports_scanned ? a.ports_scanned.join(', ') : null;
+  const open  = a.open_ports    ? a.open_ports.join(', ')    : null;
+  return `<div class="card card-red">
+    <div class="card-glow-stripe"></div>
+    <div class="card-header">
+      <div class="card-icon">⚡</div>
+      <div class="card-title-block">
+        <div class="card-label">${escHtml(label)}</div>
+        <div class="card-title">ATTACK LOG</div>
+      </div>
+      <div class="card-badge">${type}</div>
+    </div>
+    ${fieldRow('ATTACK TYPE',  `<span class="tag">${type}</span>`)}
+    ${fieldRow('SOURCE IP',    `<span class="field-val ip">${escHtml(a.source_ip||'—')}</span>`)}
+    ${fieldRow('TARGET IP',    `<span class="field-val ip">${escHtml(a.target_ip||'—')}</span>`)}
+    ${fieldRow('TIMESTAMP',    formatTime(a.timestamp))}
+    ${a.payload ? fieldRow('PAYLOAD', `<div class="payload-block">${escHtml(String(a.payload))}</div>`) : ''}
+    ${a.attempts ? fieldRow('ATTEMPTS', `<span class="field-val accent">${a.attempts}</span>`) : ''}
+    ${a.http_method ? fieldRow('HTTP METHOD', escHtml(a.http_method)) : ''}
+    ${a.endpoint    ? fieldRow('ENDPOINT',    escHtml(a.endpoint))    : ''}
+    ${ports ? fieldRow('PORTS SCANNED', escHtml(ports)) : ''}
+    ${open  ? fieldRow('OPEN PORTS', `<span class="field-val accent">${escHtml(open)}</span>`) : ''}
+    ${fieldRow('LOG ID', `<small style="font-size:10px;color:var(--text-muted)">${escHtml(a.log_id||'—')}</small>`)}
+  </div>`;
+}
+
+function buildAssessmentCard(a) {
+  const level     = (a.threat_level||'UNKNOWN').toUpperCase();
+  const chipClass = ['HIGH','MEDIUM','LOW'].includes(level) ? `threat-${level}` : '';
+  return `<div class="card card-blue">
+    <div class="card-glow-stripe"></div>
+    <div class="card-header">
+      <div class="card-icon">🛡</div>
+      <div class="card-title-block">
+        <div class="card-label">BlueTeamAgent</div>
+        <div class="card-title">THREAT ASSESSMENT</div>
+      </div>
+    </div>
+    ${fieldRow('THREAT LEVEL', `<div class="threat-chip ${chipClass}">${level}</div>`)}
+    ${fieldRow('REASON', `<span style="font-size:12px;line-height:1.7">${escHtml(a.reason||'—')}</span>`)}
+    ${fieldRow('RECOMMENDED ACTION', `<span class="tag">${escHtml((a.recommended_action||'—').replace(/_/g,' ').toUpperCase())}</span>`)}
+    ${fieldRow('SOURCE IP', `<span class="field-val ip">${escHtml(a.source_ip||'—')}</span>`)}
+    ${fieldRow('ASSESSED BY', escHtml(a.assessed_by||'—'))}
+    ${fieldRow('ASSESSED AT', formatTime(a.assessed_at))}
+  </div>`;
+}
+
+function buildPlanCard(p) {
+  const dec = (p.decision||'UNKNOWN').toUpperCase().replace(/_/g,' ');
+  return `<div class="card card-amber">
+    <div class="card-glow-stripe"></div>
+    <div class="card-header">
+      <div class="card-icon">⚙</div>
+      <div class="card-title-block">
+        <div class="card-label">PlannerAgent</div>
+        <div class="card-title">ACTION DECISION</div>
+      </div>
+      <div class="card-badge">${dec}</div>
+    </div>
+    ${fieldRow('DECISION', `<span class="field-val accent" style="font-size:16px;letter-spacing:2px">${dec}</span>`)}
+    ${fieldRow('EXPLANATION', `<span style="font-size:12px;line-height:1.7">${escHtml(p.explanation||'—')}</span>`)}
+    ${fieldRow('TARGET IP',  `<span class="field-val ip">${escHtml(p.target_ip||'—')}</span>`)}
+    ${fieldRow('PLANNED BY', escHtml(p.planned_by||'—'))}
+    ${fieldRow('PLANNED AT', formatTime(p.planned_at))}
+  </div>`;
+}
+
+function buildActionCard(ac) {
+  const act = (ac.action_taken||'UNKNOWN').toUpperCase().replace(/_/g,' ');
+  return `<div class="card card-green">
+    <div class="card-glow-stripe"></div>
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-title-block">
+        <div class="card-label">ActionEngine</div>
+        <div class="card-title">ACTION EXECUTED</div>
+      </div>
+      <div class="card-badge">${act}</div>
+    </div>
+    ${fieldRow('ACTION TAKEN', `<span class="field-val accent" style="font-size:16px;letter-spacing:2px">${act}</span>`)}
+    ${fieldRow('TARGET IP', `<span class="field-val ip">${escHtml(ac.target_ip||'—')}</span>`)}
+    ${fieldRow('DETAIL', `<span style="font-size:12px;line-height:1.7">${escHtml(ac.detail||'—')}</span>`)}
+  </div>`;
+}
+
+/* ── Staggered card reveal ────────────────────────────────────────────────── */
+function revealCards(container, baseDelay = 0) {
+  const cards = container.querySelectorAll('.card:not(.visible)');
+  cards.forEach((card, i) => {
+    setTimeout(() => card.classList.add('visible'), baseDelay + i * 120);
+  });
+}
+
+/* ── Error renderer ───────────────────────────────────────────────────────── */
+function renderError(msg) {
+  $results.innerHTML = `
+    <div class="error-state">
+      <div class="spin"></div>
+      <span>ERROR: ${escHtml(msg)}</span>
+    </div>`;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Simulation flow  (GET /run)
+════════════════════════════════════════════════════════════════════════════ */
+
+async function runSimulation() {
+  $runBtn.disabled   = true;
+  $uploadBtn.disabled = true;
+  $results.innerHTML = '';
+
+  try {
+    const [response] = await Promise.all([
+      fetch(RUN_URL),
+      animateSteps($simTicker, $simTickerText, $simProgBar, $simProgFill, SIM_STEPS),
+    ]);
+
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`HTTP ${response.status} — ${err}`);
     }
 
-    function setProgress(pct) {
-      $progFill.style.width = pct + '%';
+    const data = await response.json();
+    setTicker($simTicker, $simTickerText, '▸ DONE');
+    setProgress($simProgBar, $simProgFill, 100);
+    await delay(300);
+
+    // Render simulation result
+    $results.innerHTML = `
+      <div class="run-meta">
+        <span>RUN ID: <span>${escHtml(data.run_id||'—')}</span></span>
+        <span>EXECUTED: <span>${formatTime(data.ran_at)}</span></span>
+        <span>MODE: <span>SIMULATION</span></span>
+        <span>STATUS: <span>${escHtml((data.status||'completed').toUpperCase())}</span></span>
+      </div>
+      ${buildAttackCard(data.attack||{})}
+      ${buildAssessmentCard(data.assessment||{})}
+      ${buildPlanCard(data.plan||{})}
+      ${buildActionCard(data.action||{})}
+    `;
+
+    revealCards($results);
+    runCount++;
+    $runCount.textContent = runCount;
+    $lastRun.textContent  = 'LAST RUN: ' + new Date().toLocaleTimeString();
+
+  } catch(err) {
+    setTicker($simTicker, $simTickerText, '▸ ERROR');
+    renderError(err.message || 'Connection failed. Is the backend running?');
+  } finally {
+    await delay(600);
+    hideTicker($simTicker, $simProgBar, $simProgFill);
+    $runBtn.disabled    = false;
+    $uploadBtn.disabled = !selectedFile;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Upload flow  (POST /upload)
+════════════════════════════════════════════════════════════════════════════ */
+
+async function uploadLogs() {
+  if (!selectedFile) return;
+
+  // Client-side size guard (backend will also enforce)
+  if (selectedFile.size > MAX_FILE_BYTES) {
+    renderError(`File too large (${(selectedFile.size/1024).toFixed(1)} KB). Max is 1 MB.`);
+    return;
+  }
+
+  $uploadBtn.disabled = true;
+  $runBtn.disabled    = true;
+  $results.innerHTML  = '';
+
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+
+  try {
+    const [response] = await Promise.all([
+      fetch(UPLOAD_URL, { method: 'POST', body: formData }),
+      animateSteps($uploadTicker, $uploadTickerText, $uploadProgBar, $uploadProgFill, UPLOAD_STEPS),
+    ]);
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ detail: response.statusText }));
+      throw new Error(err.detail || `HTTP ${response.status}`);
     }
 
-    function showProgress() {
-      $progBar.classList.add('visible');
-      $ticker.classList.add('visible');
-    }
+    const data = await response.json();
+    setTicker($uploadTicker, $uploadTickerText, '▸ DONE');
+    setProgress($uploadProgBar, $uploadProgFill, 100);
+    await delay(300);
 
-    function hideProgress() {
-      $progBar.classList.remove('visible');
-      $ticker.classList.remove('visible');
-      setProgress(0);
-    }
+    renderUploadResults(data);
+    runCount++;
+    $runCount.textContent = runCount;
+    $lastRun.textContent  = 'LAST UPLOAD: ' + new Date().toLocaleTimeString();
 
-    function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+  } catch(err) {
+    setTicker($uploadTicker, $uploadTickerText, '▸ ERROR');
+    renderError(err.message || 'Upload failed. Is the backend running?');
+  } finally {
+    await delay(600);
+    hideTicker($uploadTicker, $uploadProgBar, $uploadProgFill);
+    $runBtn.disabled    = false;
+    $uploadBtn.disabled = !selectedFile;
+  }
+}
 
-    /* animate through status steps */
-    async function animateSteps() {
-      for (const step of STATUS_STEPS) {
-        setTicker(step.msg);
-        setProgress(step.pct);
-        await delay(380);
-      }
-    }
+/* ── Upload results renderer ──────────────────────────────────────────────── */
+function renderUploadResults(data) {
+  const meta = `
+    <div class="upload-meta">
+      <span>FILE: <span>${escHtml(data.filename||'—')}</span></span>
+      <span>LINES FOUND: <span>${data.lines_found}</span></span>
+      <span>LINES PROCESSED: <span>${data.lines_processed}</span></span>
+      <span>MODE: <span>LOG INGESTION</span></span>
+      <span>PROCESSED AT: <span>${formatTime(data.processed_at)}</span></span>
+    </div>`;
 
-    /* ── Formatters ──────────────────────────────────────────────────────── */
-    function formatAttackType(t) {
-      return (t || 'UNKNOWN').replace(/_/g, ' ').toUpperCase();
-    }
-
-    function formatTime(iso) {
-      if (!iso) return '—';
-      const d = new Date(iso);
-      return d.toUTCString().replace('GMT', 'UTC');
-    }
-
-    function nullOrDash(v) {
-      return (v === null || v === undefined) ? '—' : v;
-    }
-
-    /* ── Card builders ───────────────────────────────────────────────────── */
-
-    /* generic field row */
-    function fieldRow(key, valHtml) {
+  const blocks = (data.results || []).map((r, i) => {
+    // If analysis has an error key, render an error card
+    if (r.analysis && r.analysis.error) {
       return `
-        <div class="field-row">
-          <div class="field-key">${key}</div>
-          <div class="field-val">${valHtml}</div>
-        </div>`;
-    }
-
-    /* STEP 1 — Attack card (red) */
-    function buildAttackCard(a) {
-      const type  = formatAttackType(a.attack_type);
-      const ports = a.ports_scanned ? a.ports_scanned.join(', ') : null;
-      const open  = a.open_ports    ? a.open_ports.join(', ')    : null;
-
-      return `
-        <div class="card card-red" id="card-attack">
-          <div class="card-glow-stripe"></div>
-          <div class="card-header">
-            <div class="card-icon">⚡</div>
-            <div class="card-title-block">
-              <div class="card-label">Step 01 · RedTeamAgent</div>
-              <div class="card-title">ATTACK GENERATED</div>
-            </div>
-            <div class="card-badge">${type}</div>
+        <div class="upload-log-block">
+          <div class="upload-log-header">
+            <span class="upload-log-index">LOG #${r.line_index + 1}</span>
+            <span class="upload-log-raw">${escHtml(r.raw_log||'—')}</span>
           </div>
-          ${fieldRow('ATTACK TYPE',  `<span class="tag">${type}</span>`)}
-          ${fieldRow('SOURCE IP',    `<span class="field-val ip">${a.source_ip || '—'}</span>`)}
-          ${fieldRow('TARGET IP',    `<span class="field-val ip">${a.target_ip || '—'}</span>`)}
-          ${fieldRow('TIMESTAMP',    formatTime(a.timestamp))}
-          ${a.payload ? fieldRow('PAYLOAD', `<div class="payload-block">${escHtml(String(a.payload))}</div>`) : ''}
-          ${a.attempts ? fieldRow('ATTEMPTS', `<span class="field-val accent">${a.attempts}</span>`) : ''}
-          ${a.http_method ? fieldRow('HTTP METHOD', a.http_method) : ''}
-          ${a.endpoint    ? fieldRow('ENDPOINT',    escHtml(a.endpoint)) : ''}
-          ${a.response_code ? fieldRow('RESPONSE CODE', a.response_code) : ''}
-          ${ports ? fieldRow('PORTS SCANNED', ports) : ''}
-          ${open  ? fieldRow('OPEN PORTS', `<span class="field-val accent">${open}</span>`) : ''}
-          ${fieldRow('LOG ID', `<small style="font-size:10px;color:var(--text-muted)">${a.log_id || '—'}</small>`)}
-        </div>`;
-    }
-
-    /* STEP 2 — Analysis card (blue) */
-    function buildAssessmentCard(a) {
-      const level     = (a.threat_level || 'UNKNOWN').toUpperCase();
-      const chipClass = ['HIGH','MEDIUM','LOW'].includes(level) ? `threat-${level}` : '';
-      return `
-        <div class="card card-blue" id="card-assessment">
-          <div class="card-glow-stripe"></div>
-          <div class="card-header">
-            <div class="card-icon">🛡</div>
-            <div class="card-title-block">
-              <div class="card-label">Step 02 · BlueTeamAgent</div>
-              <div class="card-title">THREAT ASSESSMENT</div>
-            </div>
+          <div class="error-state" style="grid-column:unset">
+            <span>⚠ Parse error: ${escHtml(r.analysis.error)}</span>
           </div>
-          ${fieldRow('THREAT LEVEL', `<div class="threat-chip ${chipClass}">${level}</div>`)}
-          ${fieldRow('REASON', `<span style="font-size:12px;line-height:1.7">${escHtml(a.reason || '—')}</span>`)}
-          ${fieldRow('RECOMMENDED ACTION', `<span class="tag">${(a.recommended_action||'—').replace(/_/g,' ').toUpperCase()}</span>`)}
-          ${fieldRow('SOURCE IP', `<span class="field-val ip">${a.source_ip || '—'}</span>`)}
-          ${fieldRow('ASSESSED BY', a.assessed_by || '—')}
-          ${fieldRow('ASSESSED AT', formatTime(a.assessed_at))}
         </div>`;
     }
 
-    /* STEP 3 — Decision card (amber) */
-    function buildPlanCard(p) {
-      const dec = (p.decision || 'UNKNOWN').toUpperCase().replace(/_/g,' ');
-      return `
-        <div class="card card-amber" id="card-plan">
-          <div class="card-glow-stripe"></div>
-          <div class="card-header">
-            <div class="card-icon">⚙</div>
-            <div class="card-title-block">
-              <div class="card-label">Step 03 · PlannerAgent</div>
-              <div class="card-title">ACTION DECISION</div>
-            </div>
-            <div class="card-badge">${dec}</div>
-          </div>
-          ${fieldRow('DECISION', `<span class="field-val accent" style="font-size:16px;letter-spacing:2px">${dec}</span>`)}
-          ${fieldRow('EXPLANATION', `<span style="font-size:12px;line-height:1.7">${escHtml(p.explanation || '—')}</span>`)}
-          ${fieldRow('TARGET IP', `<span class="field-val ip">${p.target_ip || '—'}</span>`)}
-          ${fieldRow('PLANNED BY', p.planned_by || '—')}
-          ${fieldRow('PLANNED AT', formatTime(p.planned_at))}
-        </div>`;
-    }
+    // Build the raw log object for the attack card
+    const attackObj = {
+      log_id:      r.analysis.source_log_id || '—',
+      attack_type: (r.raw_log || '').includes('brute') ? 'brute_force'
+                 : (r.raw_log || '').includes('sql')   ? 'sql_injection'
+                 : (r.raw_log || '').includes('scan')  ? 'port_scan'
+                 : 'unknown',
+      source_ip:   r.analysis.source_ip || '—',
+      target_ip:   '—',
+      timestamp:   r.analysis.assessed_at || new Date().toISOString(),
+      payload:     r.raw_log,
+    };
 
-    /* STEP 4 — Action card (green) */
-    function buildActionCard(ac) {
-      const act = (ac.action_taken || 'UNKNOWN').toUpperCase().replace(/_/g,' ');
-      return `
-        <div class="card card-green" id="card-action">
-          <div class="card-glow-stripe"></div>
-          <div class="card-header">
-            <div class="card-icon">✓</div>
-            <div class="card-title-block">
-              <div class="card-label">Step 04 · ActionEngine</div>
-              <div class="card-title">ACTION EXECUTED</div>
-            </div>
-            <div class="card-badge">${act}</div>
-          </div>
-          ${fieldRow('ACTION TAKEN', `<span class="field-val accent" style="font-size:16px;letter-spacing:2px">${act}</span>`)}
-          ${fieldRow('TARGET IP', `<span class="field-val ip">${ac.target_ip || '—'}</span>`)}
-          ${fieldRow('DETAIL', `<span style="font-size:12px;line-height:1.7">${escHtml(ac.detail || '—')}</span>`)}
-        </div>`;
-    }
-
-    /* ── Render pipeline results ──────────────────────────────────────────── */
-    function renderResults(data) {
-      const runId  = data.run_id || '—';
-      const ranAt  = formatTime(data.ran_at);
-
-      $results.innerHTML = `
-        <div class="run-meta">
-          <span>RUN ID: <span>${runId}</span></span>
-          <span>EXECUTED: <span>${ranAt}</span></span>
-          <span>STATUS: <span>${(data.status || 'completed').toUpperCase()}</span></span>
+    return `
+      <div class="upload-log-block">
+        <div class="upload-log-header">
+          <span class="upload-log-index">LOG LINE ${r.line_index + 1}</span>
+          <span class="upload-log-raw">${escHtml(r.raw_log||'—')}</span>
         </div>
-        ${buildAttackCard(data.attack     || {})}
-        ${buildAssessmentCard(data.assessment || {})}
-        ${buildPlanCard(data.plan         || {})}
-        ${buildActionCard(data.action     || {})}
-      `;
+        <div class="upload-log-grid">
+          ${buildAssessmentCard(r.analysis||{})}
+          ${Object.keys(r.decision||{}).length ? buildPlanCard(r.decision) : ''}
+          ${Object.keys(r.action||{}).length   ? buildActionCard(r.action)  : ''}
+        </div>
+      </div>`;
+  }).join('');
 
-      // staggered reveal
-      const cards = $results.querySelectorAll('.card');
-      cards.forEach((card, i) => {
-        setTimeout(() => card.classList.add('visible'), i * 130);
-      });
-    }
+  // Wrap in a single-column container
+  $results.innerHTML = `
+    <div style="grid-column:1/-1">
+      ${meta}
+      <div style="height:16px"></div>
+      <div class="upload-results-list">${blocks}</div>
+    </div>`;
 
-    /* ── Render error ────────────────────────────────────────────────────── */
-    function renderError(msg) {
-      $results.innerHTML = `
-        <div class="error-state">
-          <div class="spin"></div>
-          <span>ERROR: ${escHtml(msg)}</span>
-        </div>`;
-    }
+  revealCards($results, 0);
+}
 
-    /* ── Main simulation function ─────────────────────────────────────────── */
-    async function runSimulation() {
-      $btn.disabled = true;
-      showProgress();
-      $results.innerHTML = '';
+/* ════════════════════════════════════════════════════════════════════════════
+   File input / drop zone handling
+════════════════════════════════════════════════════════════════════════════ */
 
-      try {
-        /* Run status animation in parallel with the fetch */
-        const [response] = await Promise.all([
-            fetch(RUN_URL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }),
-        animateSteps(),
-        ]);
+function setSelectedFile(file) {
+  if (!file) { clearFile(); return; }
 
-        if (!response.ok) {
-          const err = await response.text();
-          throw new Error(`HTTP ${response.status} — ${err}`);
-        }
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['log','txt'].includes(ext)) {
+    alert(`Unsupported file type ".${ext}". Please upload a .log or .txt file.`);
+    return;
+  }
+  if (file.size > MAX_FILE_BYTES) {
+    alert(`File too large (${(file.size/1024).toFixed(1)} KB). Maximum is 1 MB.`);
+    return;
+  }
 
-        const data = await response.json();
+  selectedFile = file;
+  $fileChipName.textContent = `${file.name}  (${(file.size/1024).toFixed(1)} KB)`;
+  $fileChipWrap.style.display = 'block';
+  $dropZone.classList.add('has-file');
+  $uploadBtn.disabled = false;
+}
 
-        setTicker('▸ DONE');
-        setProgress(100);
-        await delay(300);
+function clearFile() {
+  selectedFile = null;
+  $fileInput.value = '';
+  $fileChipWrap.style.display = 'none';
+  $fileChipName.textContent   = '';
+  $dropZone.classList.remove('has-file');
+  $uploadBtn.disabled = true;
+}
 
-        renderResults(data);
+// Native file picker
+$fileInput.addEventListener('change', () => {
+  setSelectedFile($fileInput.files[0] || null);
+});
 
-        runCount++;
-        $runCount.textContent = runCount;
-        $lastRun.textContent  = 'LAST RUN: ' + new Date().toLocaleTimeString();
+// Click drop-zone to open picker
+$dropZone.addEventListener('click', () => $fileInput.click());
 
-      } catch (err) {
-        setTicker('▸ ERROR');
-        renderError(err.message || 'Connection failed. Is the backend running?');
-      } finally {
-        await delay(600);
-        hideProgress();
-        $btn.disabled = false;
-      }
-    }
+// File chip remove button
+$fileChipRemove.addEventListener('click', (e) => {
+  e.stopPropagation();
+  clearFile();
+});
 
-    /* ── Escape HTML ─────────────────────────────────────────────────────── */
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;');
-    }
+// Drag and drop
+$dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  $dropZone.classList.add('dragover');
+});
+$dropZone.addEventListener('dragleave', () => {
+  $dropZone.classList.remove('dragover');
+});
+$dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  $dropZone.classList.remove('dragover');
+  setSelectedFile(e.dataTransfer.files[0] || null);
+});
 
-    /* ── Keyboard shortcut: Enter to run ────────────────────────────────── */
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !$btn.disabled) runSimulation();
-    });
-  </script>
+/* ── Button click handlers ─────────────────────────────────────────────────── */
+$runBtn.addEventListener('click',    runSimulation);
+$uploadBtn.addEventListener('click', uploadLogs);
+
+/* ── Keyboard shortcut: Enter = run simulation ─────────────────────────────── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !$runBtn.disabled && document.activeElement.tagName !== 'BUTTON')
+    runSimulation();
+});
+</script>
 </body>
 </html>
